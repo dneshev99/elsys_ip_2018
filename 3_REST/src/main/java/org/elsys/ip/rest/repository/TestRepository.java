@@ -1,41 +1,32 @@
 package org.elsys.ip.rest.repository;
 
 import org.elsys.ip.rest.model.Test;
+import org.elsys.ip.rest.utils.HibernateUtils;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+
 
 public class TestRepository {
-  private static List<Test> testList = new ArrayList<>(
-    Arrays.asList(
-      new Test(1, "name1"),
-      new Test(2, "name2"),
-      new Test(3, "name3"),
-      new Test(4, "name4")
-    ));
-
-  public List<Test> getTestList() {
-    return testList;
-  }
-
-  public Optional<Test> getTestById(Integer id) {
-    return testList.stream().filter(test -> test.getId() == id).findFirst();
-  }
+  private HibernateUtils utils = new HibernateUtils();
 
   public Test saveTest(Test test) {
-    testList.add(test);
-    return test;
+      Session session = utils.getSessionFactory().openSession();
+
+      session.beginTransaction();
+      session.save(test);
+      session.getTransaction().commit();
+
+      return test;
   }
 
-  public Test updateTest(Integer id, Test test) {
-    int realId = id - 1;
-    testList.set(realId, test);
-    return test;
-  }
+  public List<Test> getAllTest() {
+    Session session = utils.getSessionFactory().openSession();
 
-  public void deleteTest(Integer id) {
-    testList.removeIf(it -> it.getId() == id);
+      Query query = session.createQuery("FROM test");
+      List list = query.list();
+
+      return list;
   }
 }

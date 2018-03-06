@@ -1,7 +1,15 @@
 package org.elsys.ip.rest.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity(name = "test")
 public class Test {
-  private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
   private String name;
 
   public Test(int id, String name) {

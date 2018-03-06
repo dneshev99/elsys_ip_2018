@@ -24,12 +24,15 @@ public class TestResource {
   /**
    * Returns all the available objects.
    *
+   *
+   *
+   *
    * @return List<Test>
    */
   @GET
   @Produces("application/json")
   public List<Test> getTestList() {
-    List<Test> testList = testService.getTestList();
+   List<Test> testList = testService.getTestList();
     return testList;
   }
 
@@ -43,7 +46,8 @@ public class TestResource {
   @Path("/{id}")
   @Produces("application/json")
   public Test getTest(@PathParam("id") Integer id) {
-    return testService.getTestById(id);
+    //return testService.getTestById(id);
+    return null;
   }
 
   /**
@@ -72,7 +76,8 @@ public class TestResource {
   @Consumes("application/json")
   @Produces("application/json")
   public Test saveTest(Test test) {
-    return testService.saveTest(test);
+    testService.saveTest(test);
+    return test;
   }
 
   /**
@@ -87,7 +92,8 @@ public class TestResource {
   @Consumes("application/json")
   @Produces("application/json")
   public Test updateTest(@PathParam("id") Integer id, Test test) {
-    return testService.updateTest(id, test);
+    //return testService.updateTest(id, test);
+    return null;
   }
 
   /**
@@ -98,7 +104,7 @@ public class TestResource {
   @DELETE
   @Path("/{id}")
   public void deleteTest(@PathParam("id") Integer id) {
-    testService.deleteTest(id);
+    //testService.deleteTest(id);
   }
 
 }
